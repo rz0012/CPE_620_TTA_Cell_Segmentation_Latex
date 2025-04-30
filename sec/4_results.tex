@@ -13,7 +13,7 @@ We also compute the F1 score which is given by:
     F1 = \frac{TP}{TP+\frac{1}{2}(FP+FN)}
 \end{equation} 
 \subsection{Datasets}
-We choose Cellpose~\cite{stringer2021cellpose} Generalist dataset as our source data and \textbf{TissueNet}~\cite{TissueNet} data splits as our various domains we want to adapt to. TissueNet~\cite{TissueNet} collects tissue data (i.e., Breast, GI, Immune, Pancreas, etc.) from many platforms (i.e., CyCIF, CODEX, Vectra, MIBI, etc. ). We adapt to each of these specific domains separately in our experiments. In \Cref{tab:tn1,tab:tn2}, we show relative improvement over various dataset splits within TissueNet. The left portion describes the platform type and the right describes the tissue type. In each case, we show that we improve over the baseline. For example, for Codex-Pancreas, we improved from 0.717 to 0.742 in just one backward pass without any target labels or source data. We also present qualitative evaluation of our approach in \Cref{fig:qual}. In each of the cases illustrated, we can observe relatively low number of false positives and false negatives in the adapted version compared to the baseline.
+We choose Cellpose~\cite{stringer2021cellpose} Generalist dataset as our source data and \textbf{TissueNet}~\cite{TissueNet} data splits as our various domains we want to adapt to. TissueNet~\cite{TissueNet} collects tissue data (i.e., Breast, GI, Immune, Pancreas, etc.) from many platforms (i.e., CyCIF, CODEX, Vectra, MIBI, etc. ). We adapt to each of these specific domains separately in our experiments. In \Cref{tab:tn1,tab:tn2}, we show relative improvement over various dataset splits within TissueNet. The left portion describes the platform type and the right describes the tissue type. In each case, we show that we improve over the baseline. For example, for Codex-Pancreas, we improved from 0.717 to 0.742 in just one backward pass without any target labels or source data. We also present qualitative evaluation of our approach in \Cref{fig:qual}. In each of the cases illustrated, we can observe relatively low number of false positives and false negatives in the adapted version compared to the baseline. We also compare against CellTranspose~\cite{keaton2023celltranspose} which is a supervised few-shot adaptation approach for cell instance segmentations. We use 3-shot setting and showcase their performance in  \Cref{tab:tn1,tab:tn2}. We can notice that CellTranspose is significantly better than Cellpose and Cellpose-tta; however, it was expected as our TTA setting is fully unsupervised and CellTranspose is supervised. However, it does lead us to a question in terms of is accuracy trade-off useful is it only takes a few minutes to annotate the data. We will leave the discussion as future works. 
 
 \begin{table}
     
@@ -24,9 +24,10 @@ We choose Cellpose~\cite{stringer2021cellpose} Generalist dataset as our source 
     CP $\rightarrow$ TN  & \multicolumn{2}{l|}{Codex-Pancreas} & \multicolumn{2}{l|}{CyCIF-Immune} & \multicolumn{2}{l}{MIBI-Breast} \\
                             & {AP}             & F1                    & {AP}             & F1                    & {AP}             & F1                    \\ 
 \hline
-Cellpose                  & {0.717}          & 0.836                 & {0.476}          & 0.640                 & {0.228}          & 0.346                 \\ 
+Cellpose                  & {0.717}          & 0.836                 & {0.476}          & 0.640                 & {0.228}          & 0.346                 \\
 Cellpose-tta              & {\textbf{0.742}} & \textbf{0.853}        &{\textbf{0.501}} & \textbf{0.661}        & {\textbf{0.239}} & \textbf{0.361}        \\ 
-CellTranspose             &                &  &               & & &  \\
+\hline
+CellTranspose             & 0.852              &  0.926 &        0.816       & 0.899 & 0.662 & 0.799 \\
 \end{tabular}
     }
 \end{table}
@@ -42,7 +43,8 @@ CellTranspose             &                &  &               & & &  \\
 \hline
 Cellpose                  & {0.355}          & 0.527                 & {0.629}          & 0.776                 & {0.574}          & 0.745                 \\ 
 Cellpose-tta              & {\textbf{0.373}} & \textbf{0.545}        &{\textbf{0.631}} & \textbf{0.777}        & {\textbf{0.583}} & \textbf{0.751}        \\ 
-CellTranspose             &                &  &               & & &  \\
+\hline
+CellTranspose             &    0.697            & 0.827 &    0.858          & 0.924 & 0.821 & 0.909 \\
 \end{tabular}
     }
 \end{table}
