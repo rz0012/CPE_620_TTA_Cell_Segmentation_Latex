@@ -2,16 +2,9 @@
 
 \subsection{Overview}
 
-Our hypothesis is that performing test time adaptation on cell segmentation will improve cell tracking performance since the associations are based on simple metrics such as IoU and Euclidean distance of the centroids. We propose to pretrain a denoising framework that takes three inputs: The raw image, noisy segmentation from a pretrained segmentation model, and Gaussian splats retrieved from the raw image, and produce a clean segmentation mask as pseudo labels.
-Once the pseudo labels are retrieved, we perform knowledge distillation with stochastic restoration of parameters to perform the test-time adaptation. Please refer to \Cref{fig:overall_framework}.
+Our hypothesis is that performing test time adaptation on cell segmentation will improve cell tracking performance since the associations are based on simple metrics such as IoU and Euclidean distance of the centroids~\cite{bragantini2024ultrack}. In our approach, we assume to have a pre-trained network available that was trained on a source dataset. Since Cellpose~\cite{stringer2021cellpose} is still one of the state-of-the-art algorithms for the task of cell instance segmentation, we choose that to be our baseline algorithm and build TTA framework on top of that. In the following sections, we will discuss preliminaries on Cellpose~\cite{stringer2021cellpose}, TTA, and our proposed framework. 
 
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=9cm]{figs/project_proposal.pdf}
-    \caption{Overall Framework.}
-    \label{fig:overall_framework}
-\end{figure}
 
 \subsection{Cell Segmentation}
 
@@ -24,49 +17,56 @@ Here, we describe the inner workings of Cellpose~\cite{stringer2021cellpose}: gi
 where, for pixel $i$,  $(\mathtt{g_x}, \mathtt{g_y})$ represents the ground-truth gradient label with unit $\ell_2$-norm, $\mathtt{m} \in \{0, 1\}$ is the binary mask label indicating absence/presence of a cell structure, $\sigma(z) \doteq 1/(1+\exp(-z))$, $H$ represents the binary cross-entropy, and $\nu$ is a hyperparameter set to $0.04$. The pixel-wise loss contributions are then aggregated into a final loss $\mathcal{L}^{IS} = \sum \mathcal{L}_i^{IS}$ for the image $I$.
 
 
-Given the feature $\bm{Z}$, the cell instance segmentation head $g$ produces the mask $Y = g(\bm{Z})$, where for pixel $i$, the predicted label $y$ is a number in the set $\{0, 1, \cdots, N \}$, with $N$ being the total number of cell instances segmented. Pixels belonging to the same cell instance have same label, and $y=0$ indicates absence of a cell instance.
+Given the feature $\bm{Z}$, the cell instance segmentation head $g$ produces the mask $Y = g(\bm{Z})$, where for pixel $i$, the predicted label $y$ is a number in the set $\{0, 1, \cdots, N \}$, with $N$ being the total number of cell instances segmented. Pixels belonging to the same cell instance have same label, and $y=0$ indicates absence of a cell instance. 
 
 
-\subsection{Training Gaussian Splats Algorithm}
+\subsection{Test-Time Adaptation Model}
 
-Radiance fields are a new form of 3d representation which relies on novel differentiable ray-marching, in this talk we will discuss two types Neural Radiance Fields (NeRF) and Gaussian Splatting (GS).   In brief, a radiance field is a learnable representation of a scene, in the case of the NeRFS a large MLP is used as the mechanism and in GS a variable list of ellipsoids.  A raycast is a form of graphics rendering in which the emission of photons onto a pixel is calculated by tracking the reflection of light.  For instance, to find the color of the middle pixel of an image, a ray can be calculated in the opposite direction of how light is received by the camera.  Usually in the case of raycast, for simplicity, once the ray hits an object in the 3d scene it stops and the color of the hit object is blended into that pixel.  \\
+At test-time, we follow two TTA constraints: (i) no source data available and (ii) no target labels available. In this setting, we want to perform the adaptation in a fully unsupervised manner. Once we have a pre-trained Cellpose~\cite{stringer2021cellpose} model available, we will utilize its predictions on the target data to perform the adaptation. Here,   
 
-Instead of the ray cast ending after an arbitrary number of reflections, the rays’ direction is not affected by reflection.  Each perceptron in NeRF or Ellipsoid in GS is associated with an emission of light which adds its contribution to the ray by integrating the contribution of each perceptron or ellipsoid to the ray small changes to the light emitted are captured by the alpha-blending equation. Each of these are trained by taking training samples and finding the divergence between the rendering at the current training step compared to the known ground truth image.  In order, to have this information though you need to also know the pose of the camera relative to the scene during training which can be a major impediment to applying a radiance field method. In this case we have the benefit of a closed system where we can define the position of the viewer based on the geometry of the original imaging system which is published information.  \\  
+\subsubsection{Self-Entropy}
+One of our first objectives is to calculate the Shannon entropy~\cite{shannon1948mathematical} of the mask probability predictions. Shannon entropy~\cite{shannon1948mathematical} allows us to quantify the model uncertainty in the model predictions. As it refers to the uncertainty of the model, we could also utilize this information as a metric to decide which predictions are confident predictions. It is especially crucial as data distributions can change during inference. As our mask predictions are given by $\sigma(z)$, our Shannon entropy~\cite{shannon1948mathematical} becomes the following:
 
-\subsubsection{Dynamic Gaussian Splatting}
-\label{sec:related_works_gaussian_splatting}
-Importantly for this investigation we must go beyond the original scope of Gaussian splatting to accommodate the time-dynamic nature of the data to apply it to tracking.
+\begin{equation}
+    \mathcal{L}_i^{SE} = -\sigma(z) \log \sigma(z) \; ,
+\end{equation}
 
-In our case, we are going to combine the techniques of \cite{Zhou2023-zg} and \cite{Bae2024-xu}. In \cite{Zhou2023-zg}, they demonstrate the ability to optimize a Gaussian field that can approximate both the images and the features from a novel view. In order to take into account the time-dynamics, we have to integrate the ideas of \cite{Bae2024-xu}. In order to deal with dynamic the field is seperated into static components and dynamic deformations.  The static components are those that are well-modelled by the initial GAN. The deformations are further divided into "slow" and "fast" changes so that the slow changes can be handled by a coarse model followed by a fine deformation model to implement the fast changes.  The potential downside of \cite{Bae2024-xu}, is that it requires optimization on a per-gaussian basis so it is sensitive to complexity in the scene, but in our domain we have a situation where the objects of interest can be represented with very few gaussians without effecting the appearance based losses.
+However, since our mask predictions refer to a binary crossentropy task and do not possess a probability distribution over $k$ classes, we redefine the entropy as the following:
+\begin{equation}
+    \mathcal{L}_i^{SE} = -(\sigma(z) \log \sigma(z) + (1-\sigma(z)) \log (1-\sigma(z))) \; ,
+\end{equation}
 
-\subsection{Refinement}
-The refinement module processes three inputs to construct a more refined mask. These three inputs are: the raw image volume, initial segmentation produced by the Cellpose~\cite{stringer2021cellpose} base model, and Gaussian splats constructed from the raw image volume. On the architecture side, this module shares the exact same architecture as CellpoSe~\cite{stringer2021cellpose}, except the number of input channels. Please refer to ~\Cref{fig:refinement}.
+Now that we calculated $\mathcal{L}^{SE}$ for the binary mask predictions, we can use this information to collect more confident prediction. We choose a threshold $\delta$ that describes if the $\mathcal{L}_i^{SE}$ is lower than the threshold, then the predictions are confident enough. It is given by $\hat{\bm{z}} = \bm{z}[\mathcal{L}^{SE}<\delta]$. Further, once the indices are collected, we choose a probability threshold $p$ that determines if the original predictions have large enough probability to be considered a valid prediction which is given by $\hat{\bm{z}} = \hat{\bm{z}}[\sigma(z)<p]$. Now, we have a refined set of indices which will be useful in the next section. 
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=9cm]{figs/refinement.pdf}
-    \caption{Refinement Strategy.}
-    \label{fig:refinement}
-\end{figure}
-
-\subsection{Test-Time Adaptation}
-Please refer to the schematic in \Cref{fig:overall_framework} for a general overview of our approach. The pretrained cell segmentation model by Cellpose~\cite{stringer2021cellpose} will be the source model. We will make two copies of the source model: the student and the teacher model. A raw input, i.e., microscopy image volume, will be fed to the student as well as the teacher model. The output from the teacher model will be combined with the raw image volume and the Gaussian splats and will be fed to the pretrained refinement module. The prediction from the refinement module will be used as the pseudo labels and a consistency loss will be employed to perform the back propagation on the student model. A stochastic restoration procedure proposed in \cite{wang2022continual} will be used to restore parameters from the original source model. We will then update the teacher model with a moving average of the parameters.    \\
+\subsubsection{Contrastive Flow Loss}
+Proposed framework employs a contrastive prediction task for enhancing gradient flow features of the target pixels. \cite{keaton2023celltranspose} first proposed to utilize a contrastive objective in gradient flow alignment task; however, their framework is supervised whereas our framework performs contrastive learning in a self-supervise manner. We decide a positive sample with refined binary mask from  $\hat{z}$ with predictions $\mathbb{I}[\hat{z}>p]$, that is $\hat{z_+}=\hat{z}=1$. We further decide the gradient flow features $\hat{\bm{z}}_+$ closest to a prediction  $\hat{\bm{z}} = (z_1,z_2)$ according to a similarity metric. In our case we use cosine similarity given by $s(\bm{u},\bm{v})\doteq\frac{\bm{u}^T\bm{v}}{\| \bm{u} \| \| \bm{v}\| }$, where $\| \cdot \|$ denotes $l_2$-norm.  
 
 
-Update on the teacher model is given by
-\begin{align}
-    \theta'_{t+1} = \alpha \theta'_{t} + (1-\alpha)\theta'_{t+1},
-\end{align}
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[width=9cm]{figs/project_proposal.pdf}
+%     \caption{Overall Framework.}
+%     \label{fig:overall_framework}
+% \end{figure}
 
+% \subsection{Training Gaussian Splats Algorithm}
 
-The stochastic restoration of the parameters is given by
-\begin{align}
-    M &\sim \text{Bernoulli}(p), \\
-    W_{t+1} &= M \odot W_0 + (1-M) \odot W_{t+1}, 
-\end{align}
-where $W$ are the parameters. \\
+% Radiance fields are a new form of 3d representation which relies on novel differentiable ray-marching, in this talk we will discuss two types Neural Radiance Fields (NeRF) and Gaussian Splatting (GS).   In brief, a radiance field is a learnable representation of a scene, in the case of the NeRFS a large MLP is used as the mechanism and in GS a variable list of ellipsoids.  A raycast is a form of graphics rendering in which the emission of photons onto a pixel is calculated by tracking the reflection of light.  For instance, to find the color of the middle pixel of an image, a ray can be calculated in the opposite direction of how light is received by the camera.  Usually in the case of raycast, for simplicity, once the ray hits an object in the 3d scene it stops and the color of the hit object is blended into that pixel.  \\
 
+% Instead of the ray cast ending after an arbitrary number of reflections, the rays’ direction is not affected by reflection.  Each perceptron in NeRF or Ellipsoid in GS is associated with an emission of light which adds its contribution to the ray by integrating the contribution of each perceptron or ellipsoid to the ray small changes to the light emitted are captured by the alpha-blending equation. Each of these are trained by taking training samples and finding the divergence between the rendering at the current training step compared to the known ground truth image.  In order, to have this information though you need to also know the pose of the camera relative to the scene during training which can be a major impediment to applying a radiance field method. In this case we have the benefit of a closed system where we can define the position of the viewer based on the geometry of the original imaging system which is published information.  \\  
 
+% \subsubsection{Dynamic Gaussian Splatting}
+% \label{sec:related_works_gaussian_splatting}
+% Importantly for this investigation we must go beyond the original scope of Gaussian splatting to accommodate the time-dynamic nature of the data to apply it to tracking.
 
-\subsection{Cell Tracking}
-\dots
+% In our case, we are going to combine the techniques of \cite{Zhou2023-zg} and \cite{Bae2024-xu}. In \cite{Zhou2023-zg}, they demonstrate the ability to optimize a Gaussian field that can approximate both the images and the features from a novel view. In order to take into account the time-dynamics, we have to integrate the ideas of \cite{Bae2024-xu}. In order to deal with dynamic the field is seperated into static components and dynamic deformations.  The static components are those that are well-modelled by the initial GAN. The deformations are further divided into "slow" and "fast" changes so that the slow changes can be handled by a coarse model followed by a fine deformation model to implement the fast changes.  The potential downside of \cite{Bae2024-xu}, is that it requires optimization on a per-gaussian basis so it is sensitive to complexity in the scene, but in our domain we have a situation where the objects of interest can be represented with very few gaussians without effecting the appearance based losses.
+
+% \subsection{Refinement}
+% The refinement module processes three inputs to construct a more refined mask. These three inputs are: the raw image volume, initial segmentation produced by the Cellpose~\cite{stringer2021cellpose} base model, and Gaussian splats constructed from the raw image volume. On the architecture side, this module shares the exact same architecture as CellpoSe~\cite{stringer2021cellpose}, except the number of input channels. Please refer to ~\Cref{fig:refinement}.
+
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[width=9cm]{figs/refinement.pdf}
+%     \caption{Refinement Strategy.}
+%     \label{fig:refinement}
+% \end{figure}
