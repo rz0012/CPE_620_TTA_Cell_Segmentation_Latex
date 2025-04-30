@@ -20,11 +20,19 @@ where, for pixel $i$,  $(\mathtt{g_x}, \mathtt{g_y})$ represents the ground-trut
 Given the feature $\bm{Z}$, the cell instance segmentation head $g$ produces the mask $Y = g(\bm{Z})$, where for pixel $i$, the predicted label $y$ is a number in the set $\{0, 1, \cdots, N \}$, with $N$ being the total number of cell instances segmented. Pixels belonging to the same cell instance have same label, and $y=0$ indicates absence of a cell instance. 
 
 
+<<<<<<< HEAD
 \subsection{Test-Time Adaptation Model}
 
 At test-time, we follow two TTA constraints: (i) no source data available and (ii) no target labels available. In this setting, we want to perform the adaptation in a fully unsupervised manner. Once we have a pre-trained Cellpose~\cite{stringer2021cellpose} model available, we will utilize its predictions on the target data to perform the adaptation. Here,   
 
 \subsubsection{Self-Entropy}
+=======
+\subsection{Test-Time Adaptation Loss Computation}
+
+At test-time, we follow two TTA constraints: (i) no source data available and (ii) no target labels available. In this setting, we want to perform the adaptation in a fully unsupervised manner. Once we have a pre-trained Cellpose~\cite{stringer2021cellpose} model available, we will utilize its predictions on the target data to perform the adaptation. Here,   
+
+\subsubsection{Self-Entropy}\label{sec:tta-se}
+>>>>>>> origin/master
 One of our first objectives is to calculate the Shannon entropy~\cite{shannon1948mathematical} of the mask probability predictions. Shannon entropy~\cite{shannon1948mathematical} allows us to quantify the model uncertainty in the model predictions. As it refers to the uncertainty of the model, we could also utilize this information as a metric to decide which predictions are confident predictions. It is especially crucial as data distributions can change during inference. As our mask predictions are given by $\sigma(z)$, our Shannon entropy~\cite{shannon1948mathematical} becomes the following:
 
 \begin{equation}
@@ -38,10 +46,25 @@ However, since our mask predictions refer to a binary crossentropy task and do n
 
 Now that we calculated $\mathcal{L}^{SE}$ for the binary mask predictions, we can use this information to collect more confident prediction. We choose a threshold $\delta$ that describes if the $\mathcal{L}_i^{SE}$ is lower than the threshold, then the predictions are confident enough. It is given by $\hat{\bm{z}} = \bm{z}[\mathcal{L}^{SE}<\delta]$. Further, once the indices are collected, we choose a probability threshold $p$ that determines if the original predictions have large enough probability to be considered a valid prediction which is given by $\hat{\bm{z}} = \hat{\bm{z}}[\sigma(z)<p]$. Now, we have a refined set of indices which will be useful in the next section. 
 
+<<<<<<< HEAD
 \subsubsection{Contrastive Flow Loss}
 Proposed framework employs a contrastive prediction task for enhancing gradient flow features of the target pixels. \cite{keaton2023celltranspose} first proposed to utilize a contrastive objective in gradient flow alignment task; however, their framework is supervised whereas our framework performs contrastive learning in a self-supervise manner. We decide a positive sample with refined binary mask from  $\hat{z}$ with predictions $\mathbb{I}[\hat{z}>p]$, that is $\hat{z_+}=\hat{z}=1$. We further decide the gradient flow features $\hat{\bm{z}}_+$ closest to a prediction  $\hat{\bm{z}} = (z_1,z_2)$ according to a similarity metric. In our case we use cosine similarity given by $s(\bm{u},\bm{v})\doteq\frac{\bm{u}^T\bm{v}}{\| \bm{u} \| \| \bm{v}\| }$, where $\| \cdot \|$ denotes $l_2$-norm.  
+=======
+\subsubsection{Contrastive Flow Loss} \label{sec:tta-cfl}
+Proposed framework employs a contrastive prediction task for enhancing gradient flow features of the target pixels. \cite{keaton2023celltranspose} first proposed to utilize a contrastive objective in gradient flow alignment task and we follow their formulation in this paper; however, their framework is supervised whereas our framework performs contrastive learning in a self-supervise manner. We decide a positive sample with refined binary mask from  $\hat{z}$ with predictions $\mathbb{I}[\hat{z}>p]$, that is $\hat{z_+},\hat{z}>p$. We further decide the gradient flow features $\hat{\bm{z}}_+$ closest to a prediction  $\hat{\bm{z}} = (z_1,z_2)$ according to a similarity metric. In our case we use cosine similarity given by $s(\bm{u},\bm{v})\doteq\frac{\bm{u}^T\bm{v}}{\| \bm{u} \| \| \bm{v}\| }$, where $\| \cdot \|$ denotes $l_2$-norm.  We collect the set of negative samples $\mathcal{N}_i = \{ \hat{\bm{ z}}_- \; | \; s(\hat{\bm{ z}}_+,\hat{\bm{ z}}_-) < \theta, \hat{z}_- > p\}$, where $\theta$ is an appropriate hyperparameter threshold we choose. Once the positive and negative samples are collected, we deploy our contrastive objective for pixel $i$ that will attempt to pull the positive pairs $(\hat{\bm{z}}, \hat{\bm{z}_+})$, at the same time pushing away the negative pairs $(\hat{\bm{z}}, \hat{\bm{z}}_-)$.  \cite{wang2021understanding} suggests clever hard-mining strategies for learning with a contrastive objective in which the hard-mining of negative samples limits the need for a huge number of negative samples at the same time improving the convergence speed. Since our objective is adapting at test time, fast convergence will benefit the algorithm grately. Therefore, in our case, similar to \cite{keaton2023celltranspose}, we follow hard-mining sampling strategy for negative samples. In essence, $\mathcal{N}_i$ is composed of a set if pixels that are close to the positive samples. Please refer to  \cite{keaton2023celltranspose} for the details. \\
 
+Given a batch of target image patches, each patch is paired with another patch from the same batch. We then compute the contrastive flow loss aggregating all the components coming from the all the valid pixels, i.e.,  $\hat{z}_- > p$. 
+Now the loss function becomes the following:
+>>>>>>> origin/master
 
+\begin{equation}
+    \small
+    \mathcal{L}_i^{CF} = - \log \frac{\exp( s (\hat{\bm{ z}}, \hat{\bm{ z}}_+)/\tau )}{ \exp( s (\hat{\bm{ z}}, \hat{\bm{ z}}_+)/\tau ) + \sum_{\hat{\bm{ z}}_- \in \mathcal{N}_i} \exp( s (\hat{\bm{ z}}, \hat{\bm{ z}}_-)/\tau ) }\\
+    \label{eq-contrastive-flow-loss}
+  \end{equation}
+where $\tau$ refers to a temperature parameter we choose. 
+
+<<<<<<< HEAD
 % \begin{figure}[t]
 %     \centering
 %     \includegraphics[width=9cm]{figs/project_proposal.pdf}
@@ -70,3 +93,15 @@ Proposed framework employs a contrastive prediction task for enhancing gradient 
 %     \caption{Refinement Strategy.}
 %     \label{fig:refinement}
 % \end{figure}
+=======
+\subsubsection{Adaptation Loss}
+In \cref{sec:tta-se}, we calculate self-entropy for the binary mask predictions and in \Cref{sec:tta-cfl}, we calculate a contrastive object to enhance the gradient flow estimations. We combine this two losses for the model update at test time as shown below:
+\begin{equation}
+    \small
+    \mathcal{L}^{TTA} = \lambda_1\frac{1}{| \mathcal{M}_1 |} \sum_{\mathcal{M}_{1}} \mathcal{L}^{SE}_i + \lambda_2\frac{1}{| \mathcal{M}_2 |} \sum_{\mathcal{M}_2} \mathcal{L}^{CF}_i \; .
+    \label{eq-tta-loss}
+  \end{equation}
+Where, total pixel belonging to the target patch, we define it by $\mathcal{M}_1$, and the valid pixels we define that set by $\mathcal{M}_2$. $\lambda_1$ and $\lambda_2$ are the weight parameters for the loss. This combination of losses is used to perform the adaptation. In the next section, we will discuss what parameters we want to update during TTA. 
+
+\subsection{Test-Time Adaptation Parameter Updates}
+>>>>>>> origin/master
