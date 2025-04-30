@@ -1,7 +1,16 @@
+\section{Problem Definition}
+\begin{figure}
+    \includegraphics[width=\linewidth]{figs/Modality_Samples_4x4.pdf}
+    \caption{\textbf{Illustating variability across microscopy imaging modalities and types.} First column describes images collected from Cellpose Gen. data~\cite{stringer2021cellpose}, second column represents various images of Human U20S cells with Hoechst and phalloidin stains from BBBC006~\cite{ljosa2012annotated}, the third column illustrates images from  Tissuenet~\cite{greenwald2022whole}, and the forth column shows results obtained using H \& stain from TNBC~\cite{naylor2018segmentation}.}
+    \label{fig:modality}
+\end{figure}
+
+
+We are interested in improving tasks such as cellular activity monitoring. Various microscopes can be employed to produce videos of time-sequence observations in 2D and 3D volumes. For example, light-sheet, fluorescent, or confocal microscopy, each requiring tracking the cells in the volume they occupy. In \Cref{fig:modality}, we show different imaging data obtained using different platforms and on different tissue types. Since the variability is expanding as the cells can differ in size and shape as well as imaging modalities, there would not be a single method generalized towards all and any type of cell monitoring. \cite{bragantini2024ultrack} argues that it is merely because of the low quality segmentation algorithms which adds noise to the predictions and therefore, cannot associate cells properly for the task of lineage linking. We follow that idea, and propose to tackle the test-time adaptation problem of cell instance segmentation to improve cell tracking in this manuscript.
+ 
 \section{Methods}
 
 \subsection{Overview}
-
 Our hypothesis is that performing test time adaptation on cell segmentation will improve cell tracking performance since the associations are based on simple metrics such as IoU and Euclidean distance of the centroids~\cite{bragantini2024ultrack}. In our approach, we assume to have a pre-trained network available that was trained on a source dataset. Since Cellpose~\cite{stringer2021cellpose} is still one of the state-of-the-art algorithms for the task of cell instance segmentation, we choose that to be our baseline algorithm and build TTA framework on top of that. In the following sections, we will discuss preliminaries on Cellpose~\cite{stringer2021cellpose}, TTA, and our proposed framework. 
 
 
