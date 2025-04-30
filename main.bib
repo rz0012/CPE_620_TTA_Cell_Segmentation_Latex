@@ -79,6 +79,124 @@
   year={2024}
 }
 
+@article{TissueNet,
+    doi = {10.1371/journal.pcbi.1005177},
+    author = {Van Valen, David A. AND Kudo, Takamasa AND Lane, Keara M. AND Macklin, Derek N. AND Quach, Nicolas T. AND DeFelice, Mialy M. AND Maayan, Inbal AND Tanouchi, Yu AND Ashley, Euan A. AND Covert, Markus W.},
+    journal = {PLOS Computational Biology},
+    publisher = {Public Library of Science},
+    title = {Deep Learning Automates the Quantitative Analysis of Individual Cells in Live-Cell Imaging Experiments},
+    year = {2016},
+    month = {11},
+    volume = {12},
+    url = {https://doi.org/10.1371/journal.pcbi.1005177},
+    pages = {1-24},
+    abstract = {Live-cell imaging has opened an exciting window into the role cellular heterogeneity plays in dynamic, living systems. A major critical challenge for this class of experiments is the problem of image segmentation, or determining which parts of a microscope image correspond to which individual cells. Current approaches require many hours of manual curation and depend on approaches that are difficult to share between labs. They are also unable to robustly segment the cytoplasms of mammalian cells. Here, we show that deep convolutional neural networks, a supervised machine learning method, can solve this challenge for multiple cell types across the domains of life. We demonstrate that this approach can robustly segment fluorescent images of cell nuclei as well as phase images of the cytoplasms of individual bacterial and mammalian cells from phase contrast images without the need for a fluorescent cytoplasmic marker. These networks also enable the simultaneous segmentation and identification of different mammalian cell types grown in co-culture. A quantitative comparison with prior methods demonstrates that convolutional neural networks have improved accuracy and lead to a significant reduction in curation time. We relay our experience in designing and optimizing deep convolutional neural networks for this task and outline several design rules that we found led to robust performance. We conclude that deep convolutional neural networks are an accurate method that require less curation time, are generalizable to a multiplicity of cell types, from bacteria to mammalian cells, and expand live-cell imaging capabilities to include multi-cell type systems.},
+    number = {11},
+
+}
+
+@ARTICLE{TN2,
+  title     = "Whole-cell segmentation of tissue images with human-level
+               performance using large-scale data annotation and deep learning",
+  author    = "Greenwald, Noah F and Miller, Geneva and Moen, Erick and Kong,
+               Alex and Kagel, Adam and Dougherty, Thomas and Fullaway,
+               Christine Camacho and McIntosh, Brianna J and Leow, Ke Xuan and
+               Schwartz, Morgan Sarah and Pavelchek, Cole and Cui, Sunny and
+               Camplisson, Isabella and Bar-Tal, Omer and Singh, Jaiveer and
+               Fong, Mara and Chaudhry, Gautam and Abraham, Zion and Moseley,
+               Jackson and Warshawsky, Shiri and Soon, Erin and Greenbaum,
+               Shirley and Risom, Tyler and Hollmann, Travis and Bendall, Sean C
+               and Keren, Leeat and Graf, William and Angelo, Michael and Van
+               Valen, David",
+  journal   = "Nat. Biotechnol.",
+  publisher = "Springer Science and Business Media LLC",
+  volume    =  40,
+  number    =  4,
+  pages     = "555--565",
+  abstract  = "A principal challenge in the analysis of tissue imaging data is
+               cell segmentation-the task of identifying the precise boundary of
+               every cell in an image. To address this problem we constructed
+               TissueNet, a dataset for training segmentation models that
+               contains more than 1 million manually labeled cells, an order of
+               magnitude more than all previously published segmentation
+               training datasets. We used TissueNet to train Mesmer, a
+               deep-learning-enabled segmentation algorithm. We demonstrated
+               that Mesmer is more accurate than previous methods, generalizes
+               to the full diversity of tissue types and imaging platforms in
+               TissueNet, and achieves human-level performance. Mesmer enabled
+               the automated extraction of key cellular features, such as
+               subcellular localization of protein signal, which was challenging
+               with previous approaches. We then adapted Mesmer to harness cell
+               lineage information in highly multiplexed datasets and used this
+               enhanced version to quantify cell morphology changes during human
+               gestation. All code, data and models are released as a community
+               resource.",
+  month     =  apr,
+  year      =  2022,
+  language  = "en"
+}
+
+@ARTICLE{TN3,
+  title     = "{DeepCell} Kiosk: scaling deep learning-enabled cellular image
+               analysis with Kubernetes",
+  author    = "Bannon, Dylan and Moen, Erick and Schwartz, Morgan and Borba,
+               Enrico and Kudo, Takamasa and Greenwald, Noah and Vijayakumar,
+               Vibha and Chang, Brian and Pao, Edward and Osterman, Erik and
+               Graf, William and Van Valen, David",
+  journal   = "Nat. Methods",
+  publisher = "Springer Science and Business Media LLC",
+  volume    =  18,
+  number    =  1,
+  pages     = "43--45",
+  abstract  = "Deep learning is transforming the analysis of biological images,
+               but applying these models to large datasets remains challenging.
+               Here we describe the DeepCell Kiosk, cloud-native software that
+               dynamically scales deep learning workflows to accommodate large
+               imaging datasets. To demonstrate the scalability and
+               affordability of this software, we identified cell nuclei in 106
+               1-megapixel images in ~5.5 h for ~US$250, with a cost below
+               US$100 achievable depending on cluster configuration. The
+               DeepCell Kiosk can be downloaded at
+               https://github.com/vanvalenlab/kiosk-console ; a persistent
+               deployment is available at https://deepcell.org/ .",
+  month     =  jan,
+  year      =  2021,
+  language  = "en"
+}
+
+@ARTICLE{TN4,
+  title       = "Caliban: Accurate cell tracking and lineage construction in
+                 live-cell imaging experiments with deep learning",
+  author      = "Schwartz, Morgan Sarah and Moen, Erick and Miller, Geneva and
+                 Dougherty, Tom and Borba, Enrico and Ding, Rachel and Graf,
+                 William and Pao, Edward and Van Valen, David",
+  journal     = "bioRxiv",
+  institution = "bioRxiv",
+  pages       =  803205,
+  abstract    = "AbstractWhile live-cell imaging is a powerful approach to
+                 studying the dynamics of cellular systems, converting these
+                 imaging data into quantitative, single-cell records of cellular
+                 behavior has been a longstanding challenge. Deep learning
+                 methods have proven capable of performing cell segmentation—a
+                 critical task for analyzing live-cell imaging data—but their
+                 performance in cell tracking has been limited by a lack of
+                 dynamic datasets with temporally consistent single-cell labels.
+                 We bridge this gap through the integrated development of
+                 labeling and deep learning methodology. We present a new
+                 framework for scalable, human-in-the-loop labeling of live-cell
+                 imaging movies, which we use to label a large collection of
+                 movies of fluorescently labeled cell nuclei. We use these data
+                 to create a new deep-learning-based cell-tracking method that
+                 achieves state-of-the-art performance in cell tracking. We have
+                 made all of the data, code, and software publicly available
+                 with permissive open-source licensing through the DeepCell
+                 project’s web portalhttps://deepcell.org.",
+  month       =  oct,
+  year        =  2019,
+  language    = "en"
+}
+
+
 @article{stringer2021cellpose,
   title={Cellpose: a generalist algorithm for cellular segmentation},
   author={Stringer, Carsen and Wang, Tim and Michaelos, Michalis and Pachitariu, Marius},
@@ -310,4 +428,23 @@
   year          =  2023,
   archivePrefix = "arXiv",
   primaryClass  = "cs.CV"
+}
+
+@article{shannon1948mathematical,
+  title={A mathematical theory of communication},
+  author={Shannon, Claude E},
+  journal={The Bell system technical journal},
+  volume={27},
+  number={3},
+  pages={379--423},
+  year={1948},
+  publisher={Nokia Bell Labs}
+}
+
+@inproceedings{keaton2023celltranspose,
+  title={Celltranspose: Few-shot domain adaptation for cellular instance segmentation},
+  author={Keaton, Matthew R and Zaveri, Ram J and Doretto, Gianfranco},
+  booktitle={Proceedings of the IEEE/CVF winter conference on applications of computer vision},
+  pages={455--466},
+  year={2023}
 }
