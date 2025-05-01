@@ -11,7 +11,7 @@
 *.cb
 *.cb2
 .*.lb
-
+main.pdf
 ## Intermediate documents:
 *.dvi
 *.xdv
@@ -26,7 +26,9 @@
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
+*.bbl-SAVE-ERROR
 *.bcf
+*.bcf-SAVE-ERROR
 *.blg
 *-blx.aux
 *-blx.bib
@@ -39,6 +41,8 @@
 *.synctex.gz
 *.synctex.gz(busy)
 *.pdfsync
+*.rubbercache
+rubber.cache
 
 ## Build tool directories for auxiliary files
 # latexrun
@@ -55,6 +59,9 @@ acs-*.bib
 # amsthm
 *.thm
 
+# attachfile2
+*.atfi
+
 # beamer
 *.nav
 *.pre
@@ -63,6 +70,7 @@ acs-*.bib
 
 # changes
 *.soc
+*.loc
 
 # comment
 *.cut
@@ -138,6 +146,9 @@ acs-*.bib
 *.trc
 *.xref
 
+# hypdoc
+*.hd
+
 # hyperref
 *.brf
 
@@ -169,6 +180,7 @@ acs-*.bib
 
 # minted
 _minted*
+*.data.minted
 *.pyg
 
 # morewrites
@@ -299,6 +311,3 @@ TSWLatexianTemp*
 # option is specified. Footnotes are the stored in a file with suffix Notes.bib.
 # Uncomment the next line to have this generated file ignored.
 #*Notes.bib
-
-main.pdf
-supp.pdf

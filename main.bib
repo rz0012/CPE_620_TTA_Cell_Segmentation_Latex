@@ -456,3 +456,345 @@
   pages={2495--2504},
   year={2021}
 }
+
+@ARTICLE{Chen2022-vt,
+  title         = "Contrastive Test-Time Adaptation",
+  author        = "Chen, Dian and Wang, Dequan and Darrell, Trevor and Ebrahimi,
+                   Sayna",
+  journal       = "arXiv [cs.CV]",
+  abstract      = "Test-time adaptation is a special setting of unsupervised
+                   domain adaptation where a trained model on the source domain
+                   has to adapt to the target domain without accessing source
+                   data. We propose a novel way to leverage self-supervised
+                   contrastive learning to facilitate target feature learning,
+                   along with an online pseudo labeling scheme with refinement
+                   that significantly denoises pseudo labels. The contrastive
+                   learning task is applied jointly with pseudo labeling,
+                   contrasting positive and negative pairs constructed similarly
+                   as MoCo but with source-initialized encoder, and excluding
+                   same-class negative pairs indicated by pseudo labels.
+                   Meanwhile, we produce pseudo labels online and refine them
+                   via soft voting among their nearest neighbors in the target
+                   feature space, enabled by maintaining a memory queue. Our
+                   method, AdaContrast, achieves state-of-the-art performance on
+                   major benchmarks while having several desirable properties
+                   compared to existing works, including memory efficiency,
+                   insensitivity to hyper-parameters, and better model
+                   calibration. Project page: sites.google.com/view/adacontrast.",
+  month         =  apr,
+  year          =  2022,
+  archivePrefix = "arXiv",
+  primaryClass  = "cs.CV"
+}
+
+
+@ARTICLE{Liang2024-je,
+  title     = "A comprehensive survey on test-time adaptation under distribution
+               shifts",
+  author    = "Liang, Jian and He, Ran and Tan, Tieniu",
+  journal   = "Int. J. Comput. Vis.",
+  publisher = "Springer Science and Business Media LLC",
+  month     =  jul,
+  year      =  2024,
+  language  = "en"
+}
+
+
+@ARTICLE{He2021-wn,
+  title     = "Autoencoder based self-supervised test-time adaptation for
+               medical image analysis",
+  author    = "He, Yufan and Carass, Aaron and Zuo, Lianrui and Dewey, Blake E
+               and Prince, Jerry L",
+  journal   = "Med. Image Anal.",
+  publisher = "Elsevier BV",
+  volume    =  72,
+  number    =  102136,
+  pages     =  102136,
+  abstract  = "Deep neural networks have been successfully applied to medical
+               image analysis tasks like segmentation and synthesis. However,
+               even if a network is trained on a large dataset from the source
+               domain, its performance on unseen test domains is not guaranteed.
+               The performance drop on data obtained differently from the
+               network's training data is a major problem (known as domain
+               shift) in deploying deep learning in clinical practice. Existing
+               work focuses on retraining the model with data from the test
+               domain, or harmonizing the test domain's data to the network
+               training data. A common practice is to distribute a
+               carefully-trained model to multiple users (e.g., clinical
+               centers), and then each user uses the model to process their own
+               data, which may have a domain shift (e.g., varying imaging
+               parameters and machines). However, the lack of availability of
+               the source training data and the cost of training a new model
+               often prevents the use of known methods to solve user-specific
+               domain shifts. Here, we ask whether we can design a model that,
+               once distributed to users, can quickly adapt itself to each new
+               site without expensive retraining or access to the source
+               training data? In this paper, we propose a model that can adapt
+               based on a single test subject during inference. The model
+               consists of three parts, which are all neural networks: a task
+               model (T) which performs the image analysis task like
+               segmentation; a set of autoencoders (AEs); and a set of adaptors
+               (As). The task model and autoencoders are trained on the source
+               dataset and can be computationally expensive. In the deployment
+               stage, the adaptors are trained to transform the test image and
+               its features to minimize the domain shift as measured by the
+               autoencoders' reconstruction loss. Only the adaptors are
+               optimized during the testing stage with a single test subject
+               thus is computationally efficient. The method was validated on
+               both retinal optical coherence tomography (OCT) image
+               segmentation and magnetic resonance imaging (MRI) T1-weighted to
+               T2-weighted image synthesis. Our method, with its short
+               optimization time for the adaptors (10 iterations on a single
+               test subject) and its additional required disk space for the
+               autoencoders (around 15 MB), can achieve significant performance
+               improvement. Our code is publicly available at:
+               https://github.com/YufanHe/self-domain-adapted-network.",
+  month     =  aug,
+  year      =  2021,
+  keywords  = "Medical image analysis; Self supervised learning; Test time
+               adaptation; Unsupervised domain adaptation",
+  language  = "en"
+}
+
+@ARTICLE{Valanarasu2022-zo,
+  title         = "On-the-fly test-time adaptation for medical image
+                   segmentation",
+  author        = "Valanarasu, Jeya Maria Jose and Guo, Pengfei and Vs, Vibashan
+                   and Patel, Vishal M",
+  journal       = "arXiv [eess.IV]",
+  abstract      = "One major problem in deep learning-based solutions for
+                   medical imaging is the drop in performance when a model is
+                   tested on a data distribution different from the one that it
+                   is trained on. Adapting the source model to target data
+                   distribution at test-time is an efficient solution for the
+                   data-shift problem. Previous methods solve this by adapting
+                   the model to target distribution by using techniques like
+                   entropy minimization or regularization. In these methods, the
+                   models are still updated by back-propagation using an
+                   unsupervised loss on complete test data distribution. In
+                   real-world clinical settings, it makes more sense to adapt a
+                   model to a new test image on-the-fly and avoid model update
+                   during inference due to privacy concerns and lack of
+                   computing resource at deployment. To this end, we propose a
+                   new setting - On-the-Fly Adaptation which is zero-shot and
+                   episodic (i.e., the model is adapted to a single image at a
+                   time and also does not perform any back-propagation during
+                   test-time). To achieve this, we propose a new framework
+                   called Adaptive UNet where each convolutional block is
+                   equipped with an adaptive batch normalization layer to adapt
+                   the features with respect to a domain code. The domain code
+                   is generated using a pre-trained encoder trained on a large
+                   corpus of medical images. During test-time, the model takes
+                   in just the new test image and generates a domain code to
+                   adapt the features of source model according to the test
+                   data. We validate the performance on both 2D and 3D data
+                   distribution shifts where we get a better performance
+                   compared to previous test-time adaptation methods. Code is
+                   available at
+                   https://github.com/jeya-maria-jose/On-The-Fly-Adaptation",
+  month         =  mar,
+  year          =  2022,
+  archivePrefix = "arXiv",
+  primaryClass  = "eess.IV"
+}
+
+@ARTICLE{Karani2021-sz,
+  title     = "Test-time adaptable neural networks for robust medical image
+               segmentation",
+  author    = "Karani, Neerav and Erdil, Ertunc and Chaitanya, Krishna and
+               Konukoglu, Ender",
+  journal   = "Med. Image Anal.",
+  publisher = "Elsevier BV",
+  volume    =  68,
+  number    =  101907,
+  pages     =  101907,
+  abstract  = "Convolutional Neural Networks (CNNs) work very well for
+               supervised learning problems when the training dataset is
+               representative of the variations expected to be encountered at
+               test time. In medical image segmentation, this premise is
+               violated when there is a mismatch between training and test
+               images in terms of their acquisition details, such as the scanner
+               model or the protocol. Remarkable performance degradation of CNNs
+               in this scenario is well documented in the literature. To address
+               this problem, we design the segmentation CNN as a concatenation
+               of two sub-networks: a relatively shallow image normalization
+               CNN, followed by a deep CNN that segments the normalized image.
+               We train both these sub-networks using a training dataset,
+               consisting of annotated images from a particular scanner and
+               protocol setting. Now, at test time, we adapt the image
+               normalization sub-network for each test image, guided by an
+               implicit prior on the predicted segmentation labels. We employ an
+               independently trained denoising autoencoder (DAE) in order to
+               model such an implicit prior on plausible anatomical segmentation
+               labels. We validate the proposed idea on multi-center Magnetic
+               Resonance imaging datasets of three anatomies: brain, heart and
+               prostate. The proposed test-time adaptation consistently provides
+               performance improvement, demonstrating the promise and generality
+               of the approach. Being agnostic to the architecture of the deep
+               CNN, the second sub-network, the proposed design can be utilized
+               with any segmentation network to increase robustness to
+               variations in imaging scanners and protocols. Our code is
+               available at:
+               https://github.com/neerakara/test-time-adaptable-neural-networks-for-domain-generalization.",
+  month     =  feb,
+  year      =  2021,
+  keywords  = "Cross-protocol robustness; Cross-scanner robustness; Domain
+               generalization; Medical image segmentation",
+  language  = "en"
+}
+
+@ARTICLE{Liang2024-je,
+  title     = "A comprehensive survey on test-time adaptation under distribution
+               shifts",
+  author    = "Liang, Jian and He, Ran and Tan, Tieniu",
+  journal   = "Int. J. Comput. Vis.",
+  publisher = "Springer Science and Business Media LLC",
+  month     =  jul,
+  year      =  2024,
+  language  = "en"
+}
+
+@ARTICLE{Chen2022-vt,
+  title         = "Contrastive Test-Time Adaptation",
+  author        = "Chen, Dian and Wang, Dequan and Darrell, Trevor and Ebrahimi,
+                   Sayna",
+  journal       = "arXiv [cs.CV]",
+  abstract      = "Test-time adaptation is a special setting of unsupervised
+                   domain adaptation where a trained model on the source domain
+                   has to adapt to the target domain without accessing source
+                   data. We propose a novel way to leverage self-supervised
+                   contrastive learning to facilitate target feature learning,
+                   along with an online pseudo labeling scheme with refinement
+                   that significantly denoises pseudo labels. The contrastive
+                   learning task is applied jointly with pseudo labeling,
+                   contrasting positive and negative pairs constructed similarly
+                   as MoCo but with source-initialized encoder, and excluding
+                   same-class negative pairs indicated by pseudo labels.
+                   Meanwhile, we produce pseudo labels online and refine them
+                   via soft voting among their nearest neighbors in the target
+                   feature space, enabled by maintaining a memory queue. Our
+                   method, AdaContrast, achieves state-of-the-art performance on
+                   major benchmarks while having several desirable properties
+                   compared to existing works, including memory efficiency,
+                   insensitivity to hyper-parameters, and better model
+                   calibration. Project page: sites.google.com/view/adacontrast.",
+  month         =  apr,
+  year          =  2022,
+  archivePrefix = "arXiv",
+  primaryClass  = "cs.CV"
+}
+
+@ARTICLE{Bannon2021-qv,
+  title     = "{DeepCell} Kiosk: scaling deep learning-enabled cellular image
+               analysis with Kubernetes",
+  author    = "Bannon, Dylan and Moen, Erick and Schwartz, Morgan and Borba,
+               Enrico and Kudo, Takamasa and Greenwald, Noah and Vijayakumar,
+               Vibha and Chang, Brian and Pao, Edward and Osterman, Erik and
+               Graf, William and Van Valen, David",
+  journal   = "Nat. Methods",
+  publisher = "Springer Science and Business Media LLC",
+  volume    =  18,
+  number    =  1,
+  pages     = "43--45",
+  abstract  = "Deep learning is transforming the analysis of biological images,
+               but applying these models to large datasets remains challenging.
+               Here we describe the DeepCell Kiosk, cloud-native software that
+               dynamically scales deep learning workflows to accommodate large
+               imaging datasets. To demonstrate the scalability and
+               affordability of this software, we identified cell nuclei in 106
+               1-megapixel images in ~5.5 h for ~US$250, with a cost below
+               US$100 achievable depending on cluster configuration. The
+               DeepCell Kiosk can be downloaded at
+               https://github.com/vanvalenlab/kiosk-console ; a persistent
+               deployment is available at https://deepcell.org/ .",
+  month     =  jan,
+  year      =  2021,
+  language  = "en"
+}
+
+@ARTICLE{Schwartz2019-kd,
+  title       = "Caliban: Accurate cell tracking and lineage construction in
+                 live-cell imaging experiments with deep learning",
+  author      = "Schwartz, Morgan Sarah and Moen, Erick and Miller, Geneva and
+                 Dougherty, Tom and Borba, Enrico and Ding, Rachel and Graf,
+                 William and Pao, Edward and Van Valen, David",
+  journal     = "bioRxiv",
+  institution = "bioRxiv",
+  pages       =  803205,
+  abstract    = "AbstractWhile live-cell imaging is a powerful approach to
+                 studying the dynamics of cellular systems, converting these
+                 imaging data into quantitative, single-cell records of cellular
+                 behavior has been a longstanding challenge. Deep learning
+                 methods have proven capable of performing cell segmentation—a
+                 critical task for analyzing live-cell imaging data—but their
+                 performance in cell tracking has been limited by a lack of
+                 dynamic datasets with temporally consistent single-cell labels.
+                 We bridge this gap through the integrated development of
+                 labeling and deep learning methodology. We present a new
+                 framework for scalable, human-in-the-loop labeling of live-cell
+                 imaging movies, which we use to label a large collection of
+                 movies of fluorescently labeled cell nuclei. We use these data
+                 to create a new deep-learning-based cell-tracking method that
+                 achieves state-of-the-art performance in cell tracking. We have
+                 made all of the data, code, and software publicly available
+                 with permissive open-source licensing through the DeepCell
+                 project’s web portalhttps://deepcell.org.",
+  month       =  oct,
+  year        =  2019,
+  language    = "en"
+}
+
+@ARTICLE{Alnaggar2024-wm,
+  title     = "Efficient artificial intelligence approaches for medical image
+               processing in healthcare: comprehensive review, taxonomy, and
+               analysis",
+  author    = "Alnaggar, Omar Abdullah Murshed Farhan and Jagadale, Basavaraj N
+               and Saif, Mufeed Ahmed Naji and Ghaleb, Osamah A M and Ahmed,
+               Ammar A Q and Aqlan, Hesham Abdo Ahmed and Al-Ariki, Hasib Daowd
+               Esmail",
+  journal   = "Artif. Intell. Rev.",
+  publisher = "Springer Science and Business Media LLC",
+  volume    =  57,
+  number    =  8,
+  pages     = "1--139",
+  abstract  = "AbstractIn healthcare, medical practitioners employ various
+               imaging techniques such as CT, X-ray, PET, and MRI to diagnose
+               patients, emphasizing the crucial need for early disease
+               detection to enhance survival rates. Medical Image Analysis (MIA)
+               has undergone a transformative shift with the integration of
+               Artificial Intelligence (AI) techniques such as Machine Learning
+               (ML) and Deep Learning (DL), promising advanced diagnostics and
+               improved healthcare outcomes. Despite these advancements, a
+               comprehensive understanding of the efficiency metrics,
+               computational complexities, interpretability, and scalability of
+               AI based approaches in MIA is essential for practical feasibility
+               in real-world healthcare environments. Existing studies exploring
+               AI applications in MIA lack a consolidated review covering the
+               major MIA stages and specifically focused on evaluating the
+               efficiency of AI based approaches. The absence of a structured
+               framework limits decision-making for researchers, practitioners,
+               and policymakers in selecting and implementing optimal AI
+               approaches in healthcare. Furthermore, the lack of standardized
+               evaluation metrics complicates methodology comparison, hindering
+               the development of efficient approaches. This article addresses
+               these challenges through a comprehensive review, taxonomy, and
+               analysis of existing AI-based MIA approaches in healthcare. The
+               taxonomy covers major image processing stages, classifying AI
+               approaches for each stage based on method and further analyzing
+               them based on image origin, objective, method, dataset, and
+               evaluation metrics to reveal their strengths and weaknesses.
+               Additionally, comparative analysis conducted to evaluate the
+               efficiency of AI based MIA approaches over five publically
+               available datasets: ISIC 2018, CVC-Clinic, 2018 DSB, DRIVE, and
+               EM in terms of accuracy, precision, Recall, F-measure, mIoU, and
+               specificity. The popular public datasets and evaluation metrics
+               are briefly described and analyzed. The resulting taxonomy
+               provides a structured framework for understanding the AI
+               landscape in healthcare, facilitating evidence-based
+               decision-making and guiding future research efforts toward the
+               development of efficient and scalable AI approaches to meet
+               current healthcare needs.",
+  month     =  jul,
+  year      =  2024,
+  language  = "en"
+}
