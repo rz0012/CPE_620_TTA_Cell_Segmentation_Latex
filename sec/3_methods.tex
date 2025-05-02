@@ -95,7 +95,7 @@ Studies have shown that the major cause of performance degradation in convolutio
         \end{aligned}
 \end{equation}
 
-where $x$ is the input feature, $E(x)$ and $Var(x)$ are the expected value and variance of $x$. $\gamma$ and $\beta$ are learnable parameters for scaling and shifting. The BN layers keep track of the running mean and variance through Equation \ref{eq:bn_running}, where ${\mu}_t$ and ${\sigma}_{t}$ are current expected value and variance respectively, and $\overline{\mu}_t$ and $\overline{\sigma}_{t}$ are used for $E(x)$ and $Var(x)$, respectively. $\alpha$ is the momentum parameter. We propose to estimate the learnable parameters $\gamma$ and $\beta$ during testing that requires a backward pass. Additionally, we also dynamically updates the BN statistics $E(x)$ and $Var(x)$ during testing according to the following strategy:
+where $x$ is the input feature, $E(x)$ and $Var(x)$ are the expected value and variance of $x$. $\gamma$ and $\beta$ are learnable parameters for scaling and shifting. The BN layers keep track of the running mean and variance through Equation \Cref{eq:bn_running}, where ${\mu}_t$ and ${\sigma}_{t}$ are current expected value and variance respectively, and $\overline{\mu}_t$ and $\overline{\sigma}_{t}$ are used for $E(x)$ and $Var(x)$, respectively. $\alpha$ is the momentum parameter. We propose to estimate the learnable parameters $\gamma$ and $\beta$ during testing that requires a backward pass. Additionally, we also dynamically updates the BN statistics $E(x)$ and $Var(x)$ during testing according to the following strategy:
 \begin{equation}
   \centering
   \label{eq:bn_update}
