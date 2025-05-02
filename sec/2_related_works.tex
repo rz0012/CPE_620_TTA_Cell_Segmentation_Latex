@@ -8,6 +8,9 @@ Cell segmentation is the process of taking images from a microscope and automati
 
 A recent leader in that field is~\cite{bragantini2024ucmtracking}.  In~\cite{bragantini2024ucmtracking}, the authors designed their algorithm specifically for fluorescent imaging techniques, but their hierarchical technique facilitates holding multiple hypotheses for the tracking which means they are much more prepared for the cell division and death mentioned in \Cref{sec:intro}.  The tools to work at scale aren't available as generalized algorithm for locating  single cells in images don't yet exist, as backed up by~\cite{greenwald2022whole}.
 
+\subsubsection{Cell Pose}
+
+CellPose is the backbone network for our approach and an impressive cell segmenter even on its own~\cite{stringer2021cellpose}.  CellPose works by breaking down the segmentation task into three goals for a U-net~\cite{Ronneberger2015-dl}, two heads of the neural network are trained to estimate the gradients in both directions of the image respectively, and the final head estimates a mask of being inside or outside of a cell.  By being able to predict each of these at test time there is a gradient flow that can be observed from every pixel inside a cell towards the centroid of the cell. This gives extra indication when assigning pixels that are neighbors but belong to different cells, we can tell because their respective gradients are flowing towards different centers.  
 
 \subsection{Test-Time Adaptation}
 \label{sec:TTARW}
