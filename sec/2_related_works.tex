@@ -6,7 +6,7 @@ To discuss the related works we will discuss the challenges of Cell Segmentation
 
 Cell segmentation is the process of taking images from a microscope and automatically labelling each pixel of the image as belonging to a cell or not (in other words a background pixel).  For the purposes of tracking generally we take this a step further and perform instance segmentation~\cite{Yang_2019_ICCV}.  Instance segmentation adds the extra goal of keeping a separate label for each of the objects of interest.  \\ 
 
-Two of the recent leaders in that field are~\cite{bragantini2024ucmtracking,chen2024cmtt}.  In~\cite{bragantini2024ucmtracking}, the authors designed their algorithm specifically for fluorescent imaging techniques, but their hierarchical technique facilitates holding multiple hypotheses for the tracking which means they are much more prepared for the cell division and death mentioned in \ref{sec:intro}.  
+A recent leader in that field is~\cite{bragantini2024ucmtracking}.  In~\cite{bragantini2024ucmtracking}, the authors designed their algorithm specifically for fluorescent imaging techniques, but their hierarchical technique facilitates holding multiple hypotheses for the tracking which means they are much more prepared for the cell division and death mentioned in \ref{sec:intro}.  The tools to work at scale aren't available as generalized algorithm for locating  single cells in images don't yet exist, as backed up by~\cite{greenwald2022whole}.
 
 
 \subsection{Test-Time Adaptation}
