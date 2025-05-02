@@ -15,15 +15,10 @@ To discuss the related works we will discuss the history of Cell Segmentation an
 
 \subsection{Test-Time Adaptation}
 
-TTA is a method that attemtpts to solve the issue of drift in the data distribution between the training and testing data. This serves the purpose of makine a model that is generalizable 
+TTA is a method that attemtpts to solve the issue of drift in the data distribution between the training and testing data. This serves the purpose of making a model that is generalizable which is especially valuable for medfical imaging due to its varability. 
+In ~\cite{chen2024cmtt,Moshkov2020-uy} recently they apply TTA to cell image traking/segmentation in different ways.\\
 
-
-\begin{itemize}
-\item the history of TTA by what it solves 
-\item how to measure correctness and the fit of the model to the current data
-\item different ways to apply TTA to a model
-\end{itemize}
-
+Our approach to test-time adaptation follows in the footsteps of~\cite{Li2018-el}, which introduced batch normalization in test-time adaptation. In~\cite{Li2018-el}, they present \textit{AdaBN}, where they use the property of eliminating covariate shift that BN was originally built for by collecting the batch normalizing statistics of the whole of the target domain before re-classifying with the optimized settings.  This becomes an even more powerful tool when combined with more in-depth criteria for the BN settings.  Such as ~\cite{wang2020tent} which we mirror where they use the Shannon entropy of the model predictions to learn an affine transformation that shifts the output following the normalization.  We improve on it further by adding a simultaneous contrastive flow loss to affect the speed of convergence.\\
 
 
 

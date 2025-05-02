@@ -71,6 +71,7 @@ Where, total pixel belonging to the target patch, we define it by $\mathcal{M}_1
 
 \subsection{Test-Time Adaptation Parameter Updates}
 Studies have shown that the major cause of performance degradation in convolution-based networks is the shift in batch-normalization statistics during inference~\cite{wang2020tent,niu2022efficient,zaveri2025improving,li2016revisiting,mirza2022norm,pan2018two,schneider2020improving}. We take advantage of these findings and propose to only update the batch-normalization parameters. They are calculated by the following equations:
+
 \begin{equation}\small
     \centering
     \label{eq:bn}

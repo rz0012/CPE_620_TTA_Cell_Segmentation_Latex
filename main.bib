@@ -462,25 +462,7 @@
   author        = "Chen, Dian and Wang, Dequan and Darrell, Trevor and Ebrahimi,
                    Sayna",
   journal       = "arXiv [cs.CV]",
-  abstract      = "Test-time adaptation is a special setting of unsupervised
-                   domain adaptation where a trained model on the source domain
-                   has to adapt to the target domain without accessing source
-                   data. We propose a novel way to leverage self-supervised
-                   contrastive learning to facilitate target feature learning,
-                   along with an online pseudo labeling scheme with refinement
-                   that significantly denoises pseudo labels. The contrastive
-                   learning task is applied jointly with pseudo labeling,
-                   contrasting positive and negative pairs constructed similarly
-                   as MoCo but with source-initialized encoder, and excluding
-                   same-class negative pairs indicated by pseudo labels.
-                   Meanwhile, we produce pseudo labels online and refine them
-                   via soft voting among their nearest neighbors in the target
-                   feature space, enabled by maintaining a memory queue. Our
-                   method, AdaContrast, achieves state-of-the-art performance on
-                   major benchmarks while having several desirable properties
-                   compared to existing works, including memory efficiency,
-                   insensitivity to hyper-parameters, and better model
-                   calibration. Project page: sites.google.com/view/adacontrast.",
+
   month         =  apr,
   year          =  2022,
   archivePrefix = "arXiv",
@@ -510,45 +492,7 @@
   volume    =  72,
   number    =  102136,
   pages     =  102136,
-  abstract  = "Deep neural networks have been successfully applied to medical
-               image analysis tasks like segmentation and synthesis. However,
-               even if a network is trained on a large dataset from the source
-               domain, its performance on unseen test domains is not guaranteed.
-               The performance drop on data obtained differently from the
-               network's training data is a major problem (known as domain
-               shift) in deploying deep learning in clinical practice. Existing
-               work focuses on retraining the model with data from the test
-               domain, or harmonizing the test domain's data to the network
-               training data. A common practice is to distribute a
-               carefully-trained model to multiple users (e.g., clinical
-               centers), and then each user uses the model to process their own
-               data, which may have a domain shift (e.g., varying imaging
-               parameters and machines). However, the lack of availability of
-               the source training data and the cost of training a new model
-               often prevents the use of known methods to solve user-specific
-               domain shifts. Here, we ask whether we can design a model that,
-               once distributed to users, can quickly adapt itself to each new
-               site without expensive retraining or access to the source
-               training data? In this paper, we propose a model that can adapt
-               based on a single test subject during inference. The model
-               consists of three parts, which are all neural networks: a task
-               model (T) which performs the image analysis task like
-               segmentation; a set of autoencoders (AEs); and a set of adaptors
-               (As). The task model and autoencoders are trained on the source
-               dataset and can be computationally expensive. In the deployment
-               stage, the adaptors are trained to transform the test image and
-               its features to minimize the domain shift as measured by the
-               autoencoders' reconstruction loss. Only the adaptors are
-               optimized during the testing stage with a single test subject
-               thus is computationally efficient. The method was validated on
-               both retinal optical coherence tomography (OCT) image
-               segmentation and magnetic resonance imaging (MRI) T1-weighted to
-               T2-weighted image synthesis. Our method, with its short
-               optimization time for the adaptors (10 iterations on a single
-               test subject) and its additional required disk space for the
-               autoencoders (around 15 MB), can achieve significant performance
-               improvement. Our code is publicly available at:
-               https://github.com/YufanHe/self-domain-adapted-network.",
+
   month     =  aug,
   year      =  2021,
   keywords  = "Medical image analysis; Self supervised learning; Test time
@@ -562,36 +506,7 @@
   author        = "Valanarasu, Jeya Maria Jose and Guo, Pengfei and Vs, Vibashan
                    and Patel, Vishal M",
   journal       = "arXiv [eess.IV]",
-  abstract      = "One major problem in deep learning-based solutions for
-                   medical imaging is the drop in performance when a model is
-                   tested on a data distribution different from the one that it
-                   is trained on. Adapting the source model to target data
-                   distribution at test-time is an efficient solution for the
-                   data-shift problem. Previous methods solve this by adapting
-                   the model to target distribution by using techniques like
-                   entropy minimization or regularization. In these methods, the
-                   models are still updated by back-propagation using an
-                   unsupervised loss on complete test data distribution. In
-                   real-world clinical settings, it makes more sense to adapt a
-                   model to a new test image on-the-fly and avoid model update
-                   during inference due to privacy concerns and lack of
-                   computing resource at deployment. To this end, we propose a
-                   new setting - On-the-Fly Adaptation which is zero-shot and
-                   episodic (i.e., the model is adapted to a single image at a
-                   time and also does not perform any back-propagation during
-                   test-time). To achieve this, we propose a new framework
-                   called Adaptive UNet where each convolutional block is
-                   equipped with an adaptive batch normalization layer to adapt
-                   the features with respect to a domain code. The domain code
-                   is generated using a pre-trained encoder trained on a large
-                   corpus of medical images. During test-time, the model takes
-                   in just the new test image and generates a domain code to
-                   adapt the features of source model according to the test
-                   data. We validate the performance on both 2D and 3D data
-                   distribution shifts where we get a better performance
-                   compared to previous test-time adaptation methods. Code is
-                   available at
-                   https://github.com/jeya-maria-jose/On-The-Fly-Adaptation",
+  
   month         =  mar,
   year          =  2022,
   archivePrefix = "arXiv",
@@ -608,34 +523,7 @@
   volume    =  68,
   number    =  101907,
   pages     =  101907,
-  abstract  = "Convolutional Neural Networks (CNNs) work very well for
-               supervised learning problems when the training dataset is
-               representative of the variations expected to be encountered at
-               test time. In medical image segmentation, this premise is
-               violated when there is a mismatch between training and test
-               images in terms of their acquisition details, such as the scanner
-               model or the protocol. Remarkable performance degradation of CNNs
-               in this scenario is well documented in the literature. To address
-               this problem, we design the segmentation CNN as a concatenation
-               of two sub-networks: a relatively shallow image normalization
-               CNN, followed by a deep CNN that segments the normalized image.
-               We train both these sub-networks using a training dataset,
-               consisting of annotated images from a particular scanner and
-               protocol setting. Now, at test time, we adapt the image
-               normalization sub-network for each test image, guided by an
-               implicit prior on the predicted segmentation labels. We employ an
-               independently trained denoising autoencoder (DAE) in order to
-               model such an implicit prior on plausible anatomical segmentation
-               labels. We validate the proposed idea on multi-center Magnetic
-               Resonance imaging datasets of three anatomies: brain, heart and
-               prostate. The proposed test-time adaptation consistently provides
-               performance improvement, demonstrating the promise and generality
-               of the approach. Being agnostic to the architecture of the deep
-               CNN, the second sub-network, the proposed design can be utilized
-               with any segmentation network to increase robustness to
-               variations in imaging scanners and protocols. Our code is
-               available at:
-               https://github.com/neerakara/test-time-adaptable-neural-networks-for-domain-generalization.",
+  
   month     =  feb,
   year      =  2021,
   keywords  = "Cross-protocol robustness; Cross-scanner robustness; Domain
@@ -659,25 +547,7 @@
   author        = "Chen, Dian and Wang, Dequan and Darrell, Trevor and Ebrahimi,
                    Sayna",
   journal       = "arXiv [cs.CV]",
-  abstract      = "Test-time adaptation is a special setting of unsupervised
-                   domain adaptation where a trained model on the source domain
-                   has to adapt to the target domain without accessing source
-                   data. We propose a novel way to leverage self-supervised
-                   contrastive learning to facilitate target feature learning,
-                   along with an online pseudo labeling scheme with refinement
-                   that significantly denoises pseudo labels. The contrastive
-                   learning task is applied jointly with pseudo labeling,
-                   contrasting positive and negative pairs constructed similarly
-                   as MoCo but with source-initialized encoder, and excluding
-                   same-class negative pairs indicated by pseudo labels.
-                   Meanwhile, we produce pseudo labels online and refine them
-                   via soft voting among their nearest neighbors in the target
-                   feature space, enabled by maintaining a memory queue. Our
-                   method, AdaContrast, achieves state-of-the-art performance on
-                   major benchmarks while having several desirable properties
-                   compared to existing works, including memory efficiency,
-                   insensitivity to hyper-parameters, and better model
-                   calibration. Project page: sites.google.com/view/adacontrast.",
+  
   month         =  apr,
   year          =  2022,
   archivePrefix = "arXiv",
@@ -696,17 +566,7 @@
   volume    =  18,
   number    =  1,
   pages     = "43--45",
-  abstract  = "Deep learning is transforming the analysis of biological images,
-               but applying these models to large datasets remains challenging.
-               Here we describe the DeepCell Kiosk, cloud-native software that
-               dynamically scales deep learning workflows to accommodate large
-               imaging datasets. To demonstrate the scalability and
-               affordability of this software, we identified cell nuclei in 106
-               1-megapixel images in ~5.5 h for ~US$250, with a cost below
-               US$100 achievable depending on cluster configuration. The
-               DeepCell Kiosk can be downloaded at
-               https://github.com/vanvalenlab/kiosk-console ; a persistent
-               deployment is available at https://deepcell.org/ .",
+  
   month     =  jan,
   year      =  2021,
   language  = "en"
@@ -721,24 +581,7 @@
   journal     = "bioRxiv",
   institution = "bioRxiv",
   pages       =  803205,
-  abstract    = "AbstractWhile live-cell imaging is a powerful approach to
-                 studying the dynamics of cellular systems, converting these
-                 imaging data into quantitative, single-cell records of cellular
-                 behavior has been a longstanding challenge. Deep learning
-                 methods have proven capable of performing cell segmentation—a
-                 critical task for analyzing live-cell imaging data—but their
-                 performance in cell tracking has been limited by a lack of
-                 dynamic datasets with temporally consistent single-cell labels.
-                 We bridge this gap through the integrated development of
-                 labeling and deep learning methodology. We present a new
-                 framework for scalable, human-in-the-loop labeling of live-cell
-                 imaging movies, which we use to label a large collection of
-                 movies of fluorescently labeled cell nuclei. We use these data
-                 to create a new deep-learning-based cell-tracking method that
-                 achieves state-of-the-art performance in cell tracking. We have
-                 made all of the data, code, and software publicly available
-                 with permissive open-source licensing through the DeepCell
-                 project’s web portalhttps://deepcell.org.",
+  
   month       =  oct,
   year        =  2019,
   language    = "en"
@@ -757,43 +600,7 @@
   volume    =  57,
   number    =  8,
   pages     = "1--139",
-  abstract  = "AbstractIn healthcare, medical practitioners employ various
-               imaging techniques such as CT, X-ray, PET, and MRI to diagnose
-               patients, emphasizing the crucial need for early disease
-               detection to enhance survival rates. Medical Image Analysis (MIA)
-               has undergone a transformative shift with the integration of
-               Artificial Intelligence (AI) techniques such as Machine Learning
-               (ML) and Deep Learning (DL), promising advanced diagnostics and
-               improved healthcare outcomes. Despite these advancements, a
-               comprehensive understanding of the efficiency metrics,
-               computational complexities, interpretability, and scalability of
-               AI based approaches in MIA is essential for practical feasibility
-               in real-world healthcare environments. Existing studies exploring
-               AI applications in MIA lack a consolidated review covering the
-               major MIA stages and specifically focused on evaluating the
-               efficiency of AI based approaches. The absence of a structured
-               framework limits decision-making for researchers, practitioners,
-               and policymakers in selecting and implementing optimal AI
-               approaches in healthcare. Furthermore, the lack of standardized
-               evaluation metrics complicates methodology comparison, hindering
-               the development of efficient approaches. This article addresses
-               these challenges through a comprehensive review, taxonomy, and
-               analysis of existing AI-based MIA approaches in healthcare. The
-               taxonomy covers major image processing stages, classifying AI
-               approaches for each stage based on method and further analyzing
-               them based on image origin, objective, method, dataset, and
-               evaluation metrics to reveal their strengths and weaknesses.
-               Additionally, comparative analysis conducted to evaluate the
-               efficiency of AI based MIA approaches over five publically
-               available datasets: ISIC 2018, CVC-Clinic, 2018 DSB, DRIVE, and
-               EM in terms of accuracy, precision, Recall, F-measure, mIoU, and
-               specificity. The popular public datasets and evaluation metrics
-               are briefly described and analyzed. The resulting taxonomy
-               provides a structured framework for understanding the AI
-               landscape in healthcare, facilitating evidence-based
-               decision-making and guiding future research efforts toward the
-               development of efficient and scalable AI approaches to meet
-               current healthcare needs.",
+  
   month     =  jul,
   year      =  2024,
   language  = "en"
@@ -888,4 +695,146 @@
   pages={448--459},
   year={2018},
   publisher={IEEE}
+}
+
+@article{wang2018interactive,
+  title={Interactive medical image segmentation using deep learning with image-specific fine tuning},
+  author={Wang, Guotai and Li, Wenqi and Zuluaga, Maria A and Pratt, Rosalind and Patel, Premal A and Aertsen, Michael and Doel, Tom and David, Anna L and Deprest, Jan and Ourselin, S{\'e}bastien and others},
+  journal={IEEE transactions on medical imaging},
+  volume={37},
+  number={7},
+  pages={1562--1573},
+  year={2018},
+  publisher={IEEE}
+}
+
+@ARTICLE{Moshkov2020-uy,
+  title     = "Test-time augmentation for deep learning-based cell segmentation
+               on microscopy images",
+  author    = "Moshkov, Nikita and Mathe, Botond and Kertesz-Farkas, Attila and
+               Hollandi, Reka and Horvath, Peter",
+  journal   = "Sci. Rep.",
+  publisher = "Springer Science and Business Media LLC",
+  volume    =  10,
+  number    =  1,
+  pages     =  5068,
+  abstract  = "Recent advancements in deep learning have revolutionized the way
+               microscopy images of cells are processed. Deep learning network
+               architectures have a large number of parameters, thus, in order
+               to reach high accuracy, they require a massive amount of
+               annotated data. A common way of improving accuracy builds on the
+               artificial increase of the training set by using different
+               augmentation techniques. A less common way relies on test-time
+               augmentation (TTA) which yields transformed versions of the image
+               for prediction and the results are merged. In this paper we
+               describe how we have incorporated the test-time argumentation
+               prediction method into two major segmentation approaches utilized
+               in the single-cell analysis of microscopy images. These
+               approaches are semantic segmentation based on the U-Net, and
+               instance segmentation based on the Mask R-CNN models. Our
+               findings show that even if only simple test-time augmentations
+               (such as rotation or flipping and proper merging methods) are
+               applied, TTA can significantly improve prediction accuracy. We
+               have utilized images of tissue and cell cultures from the Data
+               Science Bowl (DSB) 2018 nuclei segmentation competition and other
+               sources. Additionally, boosting the highest-scoring method of the
+               DSB with TTA, we could further improve prediction accuracy, and
+               our method has reached an ever-best score at the DSB.",
+  month     =  mar,
+  year      =  2020,
+  language  = "en"
+}
+
+
+@inproceedings{zixian-TBN,
+author = {Su, Zixian and Guo, Jingwei and Yao, Kai and Yang, Xi and Wang, Qiufeng and Huang, Kaizhu},
+title = {Unraveling batch normalization for realistic test-time adaptation},
+year = {2024},
+isbn = {978-1-57735-887-9},
+publisher = {AAAI Press},
+url = {https://doi.org/10.1609/aaai.v38i13.29436},
+doi = {10.1609/aaai.v38i13.29436},
+abstract = {While recent test-time adaptations exhibit efficacy by adjusting batch normalization to narrow domain disparities, their effectiveness diminishes with realistic mini-batches due to inaccurate target estimation. As previous attempts merely introduce source statistics to mitigate this issue, the fundamental problem of inaccurate target estimation still persists, leaving the intrinsic test-time domain shifts unresolved. This paper delves into the problem of mini-batch degradation. By unraveling batch normalization, we discover that the inexact target statistics largely stem from the substantially reduced class diversity in batch. Drawing upon this insight, we introduce a straightforward tool, Test-time Exponential Moving Average (TEMA), to bridge the class diversity gap between training and testing batches. Importantly, our TEMA adaptively extends the scope of typical methods beyond the current batch to incorporate a diverse set of class information, which in turn boosts an accurate target estimation. Built upon this foundation, we further design a novel layer-wise rectification strategy to consistently promote test-time performance. Our proposed method enjoys a unique advantage as it requires neither training nor tuning parameters, offering a truly hassle-free solution. It significantly enhances model robustness against shifted domains and maintains resilience in diverse real-world scenarios with various batch sizes, achieving state-of-the-art performance on several major benchmarks. Code is available at https://github.com/kiwi12138/RealisticTTA.},
+booktitle = {Proceedings of the Thirty-Eighth AAAI Conference on Artificial Intelligence and Thirty-Sixth Conference on Innovative Applications of Artificial Intelligence and Fourteenth Symposium on Educational Advances in Artificial Intelligence},
+articleno = {1688},
+numpages = {9},
+series = {AAAI'24/IAAI'24/EAAI'24}
+}
+
+@ARTICLE{Hu2021-gg,
+  title    = "Testing-Time Adaptation through Online Normalization Estimation",
+  author   = "Hu, Xuefeng and Uzunbas, Mustafa and Chen, Bor-Chun and Wang, Rui
+              and Shah, Ashish and Nevatia, Ram and Lim, Ser-Nam",
+  abstract = "We present a simple and effective way to estimate the batch-norm
+              statistics during test time, to fast adapt a source model to
+              target test samples. Known as Test-Time Adaptation, most prior
+              work studying this task follows two assumptions in their
+              evaluation where (1) test samples come together as a large batch,
+              and (2) all from a single test distribution. However, in practice,
+              these two assumptions may not stand, the reasons for which we
+              propose two new evaluation settings where batch sizes are
+              arbitrary and multiple distributions are considered. Unlike the
+              previous methods that require a large batch of single distribution
+              during test time to calculate stable batch-norm statistics, our
+              method avoid any dependency on large online batches and is able to
+              estimate accurate batch-norm statistics with a single sample. The
+              proposed method significantly outperforms the State-Of-The-Art in
+              the newly proposed settings in Test-Time Adaptation Task and also
+              demonstrates improvements in various other settings such as
+              Source-Free Unsupervised Domain Adaptation and Zero-Shot
+              Classification.",
+  month    =  oct,
+  year     =  2021
+}
+
+
+
+@InProceedings{pmlr-v119-bronskill20a,
+  title = 	 {{T}ask{N}orm: Rethinking Batch Normalization for Meta-Learning},
+  author =       {Bronskill, John and Gordon, Jonathan and Requeima, James and Nowozin, Sebastian and Turner, Richard},
+  booktitle = 	 {Proceedings of the 37th International Conference on Machine Learning},
+  pages = 	 {1153--1164},
+  year = 	 {2020},
+  editor = 	 {III, Hal Daumé and Singh, Aarti},
+  volume = 	 {119},
+  series = 	 {Proceedings of Machine Learning Research},
+  month = 	 {13--18 Jul},
+  publisher =    {PMLR},
+  pdf = 	 {http://proceedings.mlr.press/v119/bronskill20a/bronskill20a.pdf},
+  url = 	 {https://proceedings.mlr.press/v119/bronskill20a.html},
+  abstract = 	 {Modern meta-learning approaches for image classification rely on increasingly deep networks to achieve state-of-the-art performance, making batch normalization an essential component of meta-learning pipelines. However, the hierarchical nature of the meta-learning setting presents several challenges that can render conventional batch normalization ineffective, giving rise to the need to rethink normalization in this setting. We evaluate a range of approaches to batch normalization for meta-learning scenarios, and develop a novel approach that we call TaskNorm. Experiments on fourteen datasets demonstrate that the choice of batch normalization has a dramatic effect on both classification accuracy and training time for both gradient based- and gradient-free meta-learning approaches. Importantly, TaskNorm is found to consistently improve performance. Finally, we provide a set of best practices for normalization that will allow fair comparison of meta-learning algorithms.}
+}
+
+
+@ARTICLE{Li2018-el,
+  title     = "Adaptive Batch Normalization for practical domain adaptation",
+  author    = "Li, Yanghao and Wang, Naiyan and Shi, Jianping and Hou, Xiaodi
+               and Liu, Jiaying",
+  journal   = "Pattern Recognit.",
+  publisher = "Elsevier BV",
+  volume    =  80,
+  pages     = "109--117",
+  abstract  = "Deep neural networks (DNN) have shown unprecedented success in
+               various computer vision applications such as image classification
+               and object detection. However, it is still a common annoyance
+               during the training phase, that one has to prepare at least
+               thousands of labeled images to fine-tune a network to a specific
+               domain. Recent study (Tommasi et al., 2015) shows that a DNN has
+               strong dependency towards the training dataset, and the learned
+               features cannot be easily transferred to a different but relevant
+               task without fine-tuning. In this paper, we propose a simple yet
+               powerful remedy, called Adaptive Batch Normalization (AdaBN) to
+               increase the generalization ability of a DNN. By modulating the
+               statistics from the source domain to the target domain in all
+               Batch Normalization layers across the network, our approach
+               achieves deep adaptation effect for domain adaptation tasks. In
+               contrary to other deep learning domain adaptation methods, our
+               method does not require additional components, and is
+               parameter-free. It archives state-of-the-art performance despite
+               its surprising simplicity. Furthermore, we demonstrate that our
+               method is complementary with other existing methods. Combining
+               AdaBN with existing domain adaptation treatments may further
+               improve model performance.",
+  month     =  aug,
+  year      =  2018
 }
