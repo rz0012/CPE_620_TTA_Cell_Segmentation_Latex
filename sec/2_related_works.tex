@@ -1,30 +1,23 @@
 \section{Related Works}
+\label{sec:RW}
 To discuss the related works we will discuss the challenges of Cell Segmentation and Test-Time Adaptation (TTA).
 
 \subsection{Cell Segmentation}
 
 Cell segmentation is the process of taking images from a microscope and automatically labelling each pixel of the image as belonging to a cell or not (in other words a background pixel).  For the purposes of tracking generally we take this a step further and perform instance segmentation~\cite{Yang_2019_ICCV}.  Instance segmentation adds the extra goal of keeping a separate label for each of the objects of interest.  \\ 
 
-Two of the recent leaders in that field are~\cite{bragantini2024ucmtracking,chen2024cmtt}.  In~\cite{bragantini2024ucmtracking}, the authors designed their algorithm specifically for fluorescent imaging techniques, but their hierarchical technique facilitates holding multiple hypotheses for the tracking which means they are much more prepared for the cell division and death mentioned in \ref{sec:intro}.
+Two of the recent leaders in that field are~\cite{bragantini2024ucmtracking,chen2024cmtt}.  In~\cite{bragantini2024ucmtracking}, the authors designed their algorithm specifically for fluorescent imaging techniques, but their hierarchical technique facilitates holding multiple hypotheses for the tracking which means they are much more prepared for the cell division and death mentioned in \ref{sec:intro}.  
 
-
-\begin{itemize}
-
- 
-
-    
-    \item Cellpose
-    
-    
-\end{itemize}
 
 \subsection{Test-Time Adaptation}
+\label{sec:TTARW}
 
 TTA is a method that attempts to solve the issue of drift in the data distribution between the training and testing data. This serves the purpose of making a model that is generalizable which is especially valuable for medical imaging due to its variability. 
-
-In ~\cite{chen2024cmtt,Moshkov2020-uy} recently they apply TTA to cell image tracking/segmentation in different ways.\\
+\\
 
 Our approach to test-time adaptation follows in the footsteps of~\cite{Li2018-el}, which introduced batch normalization in test-time adaptation. In~\cite{Li2018-el}, they present \textit{AdaBN}, where they use the property of eliminating covariate shift that BN was originally built for by collecting the batch normalizing statistics of the whole of the target domain before re-classifying with the optimized settings.  This becomes an even more powerful tool when combined with more in-depth criteria for the BN settings.  Such as ~\cite{wang2020tent} which we mirror where they use the Shannon entropy of the model predictions to learn an affine transformation that shifts the output following the normalization.  We improve on it further by adding a simultaneous contrastive flow loss to affect the speed of convergence.\\
+
+In ~\cite{chen2024cmtt,Moshkov2020-uy} recently they apply TTA to cell image tracking/segmentation in different ways.  In~\cite{chen2024cmtt} a central-metric contrastive loss is used to break the image into patches and adapt them separately and simultaneously to the whole image adaptation.  By breaking the problem into two, but aggregating the information back into one pre-segmentation they improve their false-negative rates as the hardest, most off-distribution samples are overlooked.   In~\cite{Moshkov2020-uy} the adaptation happens at the input with a system that feeds the input datum augmented by rotations, translations, and/or flipped.  The original and all of the augmented samples are processed by the network and then the outputs are dis-augmented, for instance if the input was flipped along the x-y axis the output would be flipped again to undo the transformation.  This way biases in the orientation of features in the training data can be averaged out.  
 
 
 
