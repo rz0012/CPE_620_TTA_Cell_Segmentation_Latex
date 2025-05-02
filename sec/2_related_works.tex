@@ -3,22 +3,24 @@ To discuss the related works we will discuss the challenges of Cell Segmentation
 
 \subsection{Cell Segmentation}
 
-Cell segmentation is the process of taking images from a microscope and automatically labelling each pixel of the image as belonging to a cell or not (in other words a background pixel).  For the purposes of tracking generally we take this a step further and perform instance segmentation~\cite{INSTANCESEG}.  Instance segmentation adds the extra goal of keeping a seperate label for each of the present 
+Cell segmentation is the process of taking images from a microscope and automatically labelling each pixel of the image as belonging to a cell or not (in other words a background pixel).  For the purposes of tracking generally we take this a step further and perform instance segmentation~\cite{Yang_2019_ICCV}.  Instance segmentation adds the extra goal of keeping a separate label for each of the objects of interest.  \\ 
+
+Two of the recent leaders in that field are~\cite{bragantini2024ucmtracking,chen2024cmtt}.  In~\cite{bragantini2024ucmtracking}, the authors designed their algorithm specifically for fluorescent imaging techniques, but their hierarchical technique facilitates holding multiple hypotheses for the tracking which means they are much more prepared for the cell division and death mentioned in \ref{sec:intro}.
 
 
 \begin{itemize}
 
  
 
-    \item Utrack 
+    
     \item Cellpose
-    \item Tissuenet
+    
     
 \end{itemize}
 
 \subsection{Test-Time Adaptation}
 
-TTA is a method that attemtpts to solve the issue of drift in the data distribution between the training and testing data. This serves the purpose of making a model that is generalizable which is especially valuable for medical imaging due to its varability. 
+TTA is a method that attempts to solve the issue of drift in the data distribution between the training and testing data. This serves the purpose of making a model that is generalizable which is especially valuable for medical imaging due to its variability. 
 
 In ~\cite{chen2024cmtt,Moshkov2020-uy} recently they apply TTA to cell image tracking/segmentation in different ways.\\
 
