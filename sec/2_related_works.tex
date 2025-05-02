@@ -1,22 +1,26 @@
 \section{Related Works}
-To discuss the related works we will discuss the history of Cell Segmentation and Test-Time Adaptation (TTA) seperately, as so far there is not much work done which combines the two.
+To discuss the related works we will discuss the challenges of Cell Segmentation and Test-Time Adaptation (TTA).
 
 \subsection{Cell Segmentation}
+
+Cell segmentation is the process of taking images from a microscope and automatically labelling each pixel of the image as belonging to a cell or not (in other words a background pixel).  For the purposes of tracking generally we take this a step further and perform instance segmentation~\cite{INSTANCESEG}.  Instance segmentation adds the extra goal of keeping a seperate label for each of the present 
+
+
 \begin{itemize}
 
-    \item more expession of the challenges of cell segmentation 
-    \item emphasis on the different modes and different tissues
+ 
 
     \item Utrack 
     \item Cellpose
     \item Tissuenet
-    \item 
+    
 \end{itemize}
 
 \subsection{Test-Time Adaptation}
 
-TTA is a method that attemtpts to solve the issue of drift in the data distribution between the training and testing data. This serves the purpose of making a model that is generalizable which is especially valuable for medfical imaging due to its varability. 
-In ~\cite{chen2024cmtt,Moshkov2020-uy} recently they apply TTA to cell image traking/segmentation in different ways.\\
+TTA is a method that attemtpts to solve the issue of drift in the data distribution between the training and testing data. This serves the purpose of making a model that is generalizable which is especially valuable for medical imaging due to its varability. 
+
+In ~\cite{chen2024cmtt,Moshkov2020-uy} recently they apply TTA to cell image tracking/segmentation in different ways.\\
 
 Our approach to test-time adaptation follows in the footsteps of~\cite{Li2018-el}, which introduced batch normalization in test-time adaptation. In~\cite{Li2018-el}, they present \textit{AdaBN}, where they use the property of eliminating covariate shift that BN was originally built for by collecting the batch normalizing statistics of the whole of the target domain before re-classifying with the optimized settings.  This becomes an even more powerful tool when combined with more in-depth criteria for the BN settings.  Such as ~\cite{wang2020tent} which we mirror where they use the Shannon entropy of the model predictions to learn an affine transformation that shifts the output following the normalization.  We improve on it further by adding a simultaneous contrastive flow loss to affect the speed of convergence.\\
 
